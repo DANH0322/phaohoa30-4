@@ -1,0 +1,11 @@
+/* background.css */
+
+/* Thiết lập hình nền cho body */
+body {
+    background-image: url('1.jpg'); /* Đường dẫn tới hình ảnh được lưu trữ trong thư mục dự án */
+    background-size: cover; /* Đảm bảo hình nền phủ toàn bộ phần tử body */
+    background-repeat: no-repeat; /* Không lặp lại hình nền */
+    margin: 0;
+    overflow: hidden;
+    backdrop-filter: blur(5px); /* Áp dụng hiệu ứng mờ với độ mờ là 5px */
+}

@@ -1,0 +1,10 @@
+.centered-datetime {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    font-size: 24px; /* Tuỳ chỉnh kích thước phù hợp */
+    font-family: Arial, sans-serif; /* Tuỳ chỉnh font chữ phù hợp */
+    color: #fefefe; /* Màu chữ trắng */
+}

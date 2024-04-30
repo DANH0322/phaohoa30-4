@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>30-4</title>
+<!-- Thêm thẻ script vào phần head -->
+<script src="updateDateTime.js"></script>
+<!-- Các thẻ khác trong phần head -->
+<style>
+    body {
+        font-family: Arial, sans-serif; /* Font chữ */
+        color: #ff0000cf; /* Màu chữ trắng */
+    }
+    canvas {
+        display: block;
+    }
+    h1 {
+        text-align: center; /* Canh giữa tiêu đề */
+        margin-top: 60px; /* Khoảng cách từ đỉnh trang */
+        font-size: 70px; /* Kích thước chữ */
+        position: relative;
+    }
+    .centered-datetime {
+        position: absolute;
+        top: 0%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        font-size: 24px;
+        font-family: Arial, sans-serif;
+        color: rgb(253, 253, 254);
+        margin-top: -30px; /* Tạo khoảng cách 20px từ phần tử tiêu đề */
+    }
+</style>
+<link rel="stylesheet" href="styles.css"> <!-- Liên kết với file CSS -->
+<link rel="stylesheet" href="background.css"> <!-- Liên kết với file CSS -->
+</head>
+<body>
+<h1> Chào mừng ngày lễ 30-4 </h1> <!-- Tiêu đề -->
+<div id="currentDateTime" class="centered-datetime"></div> <!-- Phần tử hiển thị ngày và giờ -->
+<canvas id="canvas"></canvas>
+
+<script>
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    const fireworks = [];
+
+    function createFirework() {
+        const firework = {
+            x: Math.random() * canvas.width,
+            y: canvas.height,
+            color: `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255})`,
+            radius: Math.random() * 2 + 1,
+            speed: Math.random() * 3 + 1,
+            angle: Math.PI / 2,
+            explode: false,
+            particles: []
+        };
+
+        fireworks.push(firework);
+    }
+
+    function createParticles(firework) {
+        for (let i = 0; i < 30; i++) {
+            const particle = {
+                x: firework.x,
+                y: firework.y,
+                color: firework.color,
+                speed: Math.random() * 7 + 1, // Tăng giá trị speed để pháo hoa bay cao hơn
+                angle: Math.random() * Math.PI * 2,
+                life: Math.random() * 50 + 50
+            };
+            firework.particles.push(particle);
+        }
+    }
+    function update() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        fireworks.forEach((firework, index) => {
+            if (!firework.explode) {
+                firework.y -= firework.speed;
+                if (firework.y <= canvas.height * 0.5) {
+                    firework.explode = true;
+                    createParticles(firework);
+                }
+                ctx.beginPath();
+                ctx.moveTo(firework.x, firework.y); // Bắt đầu từ vị trí hiện tại của pháo hoa
+                ctx.lineTo(firework.x, firework.y + 10); // Di chuyển đến một vị trí dưới
+                ctx.strokeStyle = firework.color;
+                ctx.stroke();
+            } else {
+                firework.particles.forEach((particle, i) => {
+                    particle.x += Math.cos(particle.angle) * particle.speed;
+                    particle.y += Math.sin(particle.angle) * particle.speed;
+                    particle.life--;
+                    if (particle.life <= 0) {
+                        firework.particles.splice(i, 1);
+                    } else {
+                        ctx.beginPath();
+                        ctx.arc(particle.x, particle.y, 2, 0, Math.PI * 2); // Điểm nổ
+                        ctx.fillStyle = particle.color;
+                        ctx.fill();
+                    }
+                });
+                if (firework.particles.length === 0) {
+                    fireworks.splice(index, 1);
+                }
+            }
+        });
+
+        requestAnimationFrame(update);
+    }
+
+    function init() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight - 100; /* Giảm chiều cao canvas để tránh che đè tiêu đề */
+        setInterval(createFirework, 250); //tăng tốc độ
+        update();
+    }
+
+    window.onload = init;
+    window.onresize = function() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight - 100; /* Giảm chiều cao canvas để tránh che đè tiêu đề */
+    };
+</script>
+</body>
+</html>

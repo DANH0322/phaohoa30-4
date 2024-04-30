@@ -1,0 +1,14 @@
+/* styles.css */
+
+/* Thiết lập các quy tắc thiết kế cho tiêu đề */
+h1 {
+    text-align: center; /* Canh giữa tiêu đề */
+    margin-top: 70px; /* Khoảng cách từ đỉnh trang */
+    font-size: 55px; /* Kích thước chữ */
+    position: relative;
+}
+/* Thiết lập các quy tắc thiết kế cho canvas */
+canvas {
+    display: block; /* Hiển thị là khối */
+    margin: 0 auto; /* Canh giữa canvas */
+}
